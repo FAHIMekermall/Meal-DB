@@ -19,11 +19,31 @@ const loadData = () => {
     else{
         fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${inputFieldValue}`)
         .then(res => res.json())
-        .then(data => dataLoadDisplay(data))
+        .then(data => dataLoadDisplay(data.meals))
         .catch(error => console.log(error))
     }   
 };
 
 const dataLoadDisplay = meals => {
-    console.log(meals);
+    meals.forEach(meal => {
+        const cardContainer = document.getElementById("cardContainer")
+        const newCard = document.createElement('div');
+        newCard.classList.add('col')
+        newCard.innerHTML = `
+                  <div title="click for more instruction details" class="card">
+                    <img src="${meal.strMealThumb}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">${meal.strMeal}</h5>
+                      <p class="card-text">${meal.strInstructions.slice(0,100)}....</p>
+                    </div>
+                  </div>
+        `
+        cardContainer.appendChild(newCard)
+        newCard.addEventListener("click", function(){
+            const alertText = meal.strInstructions;
+            Swal.fire(
+                alertText
+            )
+        })
+    });
 }

@@ -1,9 +1,5 @@
 
 button, button::after {
-    width: 100px;
-    height: 40px;
-    font-size: 36px;
-    font-family: 'Bebas Neue', cursive;
     background: linear-gradient(45deg, transparent 5%, #FF013C 5%);
     border: 0;
     color: rgb(230, 211, 211);
