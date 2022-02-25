@@ -25,8 +25,33 @@ const loadData = () => {
 };
 
 const dataLoadDisplay = meals => {
+    if(meals == null){
+      document.getElementById("cardContainer").textContent= ``;
+      let timerInterval
+      Swal.fire({
+        title: "We can't find anything",
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading()
+          const b = Swal.getHtmlContainer().querySelector('b')
+          timerInterval = setInterval(() => {
+            b.textContent = Swal.getTimerLeft()
+          }, 100)
+        },
+        willClose: () => {
+          clearInterval(timerInterval)
+        }
+      }).then((result) => {
+        /* Read more about handling dismissals below */
+        if (result.dismiss === Swal.DismissReason.timer) {
+          console.log('I was closed by the timer')
+        }
+      })
+    }
     meals.forEach(meal => {
         const cardContainer = document.getElementById("cardContainer")
+        cardContainer.textContent = ``;
         const newCard = document.createElement('div');
         newCard.classList.add('col')
         newCard.innerHTML = `
